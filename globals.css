@@ -1,0 +1,584 @@
+@import "tailwindcss";
+
+/* ==========================================================================
+   ESTUDIO TOLENTINO & ASOCIADOS · Sistema de diseño (versión 2)
+   --------------------------------------------------------------------------
+   Un solo lugar para color, tipografía y ritmo.
+
+   COLOR. Los componentes nunca usan un color literal: usan un token
+   semántico (superficie, tinta, línea, marca, acento). Los tokens se
+   declaran dos veces, en claro y en oscuro, de modo que todo el sitio
+   cambia de modo sin tocar una sola clase.
+
+   Se conservan los dos colores de la identidad: el azul marino de la marca
+   y el bronce del imagotipo. Lo que cambia es la temperatura del entorno:
+   los grises pasan de cálidos a neutros fríos, y con ello el bronce deja de
+   leerse como parte de un fondo beige y vuelve a leerse como metal.
+
+   FORMA. Regla única: todo ángulo es recto, radio 0. Tarjetas, campos y
+   botones comparten esa geometría, heredada del monograma T&A. La única
+   excepción documentada es el botón flotante de WhatsApp, circular porque
+   así lo espera cualquiera que use la aplicación.
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   1. Tokens · modo claro
+   -------------------------------------------------------------------------- */
+
+:root {
+  color-scheme: light;
+
+  /* Superficies. Neutros derivados del gris claro del manual. */
+  --t-superficie: #ffffff;
+  --t-superficie-2: #f5f5f6;
+  --t-superficie-3: #e9e9ea;
+
+  /* Tinta. El azul de marca es el color del texto fuerte; el gris del manual
+     gris del manual da los dos niveles de cuerpo, en dos tonos suyos para que
+     ambos cumplan AA también sobre la superficie alterna #f5f5f6:
+     15.8:1, 6.7:1 y 4.7:1. */
+  --t-tinta: #1c2341;
+  --t-tinta-2: #565654;
+  --t-tinta-3: #6e6e6c;
+
+  /* Líneas. El gris claro del manual es el borde marcado. */
+  --t-linea: #e2e2e1;
+  --t-linea-fuerte: #b1b1b1;
+
+  /* Marca */
+  --t-marca: #1c2341;
+  --t-marca-fuerte: #11162a;
+
+  /* Acento de marca: el gris #626260 del manual. Antetítulos, filetes,
+     íconos y realces. No es un color inventado: es el del ampersand del
+     imagotipo y el del tagline. */
+  --t-acento: #626260;
+  --t-acento-tenue: rgba(98, 98, 96, 0.1);
+  --t-acento-claro: #b1b1b1;
+
+  /* Enlace: única extensión digital de la paleta, documentada aparte.
+     Es el azul de marca con más luminosidad y croma, y se usa solo donde hay
+     interacción: enlaces, foco de teclado y validación. Sin él, un enlace y
+     un texto normal serían del mismo color. Contraste sobre blanco 7.6:1. */
+  --t-enlace: #2b4ea8;
+
+  /* Banda invertida: el azul de marca puro, con el gris claro del manual
+     como color secundario, exactamente como lo indica el manual. */
+  --t-invertido: #1c2341;
+  --t-sobre-invertido: #ffffff;
+  --t-sobre-invertido-2: #b1b1b1;
+
+  /* Estado de error */
+  --t-error: #b3261e;
+  --t-error-fondo: #fdf2f1;
+
+  --t-sombra: 28 35 65;
+
+  --t-ease: cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+
+/* --------------------------------------------------------------------------
+   2. Tokens · modo oscuro
+   --------------------------------------------------------------------------
+   El manual no contempla modo oscuro. Se construye derivando del azul de
+   marca, sin introducir matices nuevos: las superficies son ese azul
+   oscurecido y el gris claro #b1b1b1 pasa a ser el acento.
+   -------------------------------------------------------------------------- */
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    color-scheme: dark;
+
+    --t-superficie: #11152a;
+    --t-superficie-2: #171c33;
+    --t-superficie-3: #212743;
+
+    --t-tinta: #f0f2f7;
+    --t-tinta-2: #c3c7d2;
+    --t-tinta-3: #949bac;
+
+    --t-linea: #2a3149;
+    --t-linea-fuerte: #414a68;
+
+    --t-marca: #93a3cf;
+    --t-marca-fuerte: #b8c3e2;
+
+    --t-acento: #b1b1b1;
+    --t-acento-tenue: rgba(177, 177, 177, 0.14);
+    --t-acento-claro: #b1b1b1;
+
+    --t-enlace: #93b2f5;
+
+    --t-invertido: #0b0f1d;
+    --t-sobre-invertido: #ffffff;
+    --t-sobre-invertido-2: #b1b1b1;
+
+    --t-error: #ff9d94;
+    --t-error-fondo: #2a1614;
+
+    --t-sombra: 0 0 0;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   3. Mapeo a utilidades de Tailwind
+   -------------------------------------------------------------------------- */
+
+@theme inline {
+  --color-superficie: var(--t-superficie);
+  --color-superficie-2: var(--t-superficie-2);
+  --color-superficie-3: var(--t-superficie-3);
+
+  --color-tinta: var(--t-tinta);
+  --color-tinta-2: var(--t-tinta-2);
+  --color-tinta-3: var(--t-tinta-3);
+
+  --color-linea: var(--t-linea);
+  --color-linea-fuerte: var(--t-linea-fuerte);
+
+  --color-marca: var(--t-marca);
+  --color-marca-fuerte: var(--t-marca-fuerte);
+
+  --color-acento: var(--t-acento);
+  --color-acento-tenue: var(--t-acento-tenue);
+  --color-acento-claro: var(--t-acento-claro);
+
+  --color-enlace: var(--t-enlace);
+
+  --color-error: var(--t-error);
+  --color-error-fondo: var(--t-error-fondo);
+
+  --color-invertido: var(--t-invertido);
+  --color-sobre-invertido: var(--t-sobre-invertido);
+  --color-sobre-invertido-2: var(--t-sobre-invertido-2);
+
+  --font-sans:
+    "Montserrat Variable", Montserrat, "Segoe UI", system-ui, -apple-system,
+    sans-serif;
+
+  --ease-marca: cubic-bezier(0.22, 0.61, 0.36, 1);
+  --radius-none: 0px;
+}
+
+/* --------------------------------------------------------------------------
+   4. Base
+   -------------------------------------------------------------------------- */
+
+/* Va en @layer base a propósito. Las utilidades de Tailwind viven en su
+   propia capa, y en CSS una regla sin capa gana siempre a una con capa: si
+   estos estilos de etiqueta quedaran fuera, un simple text-acento sobre un
+   <h2> dejaría de funcionar y el titular saldría del color equivocado. */
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 6rem;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    background-color: var(--t-superficie);
+    color: var(--t-tinta-2);
+    font-family: var(--font-sans);
+    font-size: 1rem;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    color: var(--t-tinta);
+    font-weight: 600;
+    letter-spacing: -0.022em;
+  }
+
+  ::selection {
+    background-color: var(--t-acento);
+    color: #fff;
+  }
+
+  :where(a, button, input, select, textarea, summary, [tabindex]):focus-visible {
+    outline: 2px solid var(--t-enlace);
+    outline-offset: 3px;
+  }
+}
+
+/* Cifras tabulares en la misma familia. El manual solo autoriza Montserrat
+   para medios digitales, así que no se introduce un monoespaciado aparte:
+   basta con la numeración tabular para que las columnas no bailen. */
+.cifra {
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum" 1;
+  letter-spacing: 0.01em;
+}
+
+/* --------------------------------------------------------------------------
+   5. Utilidades de composición
+   -------------------------------------------------------------------------- */
+
+.contenedor {
+  width: 100%;
+  max-width: 80rem;
+  margin-inline: auto;
+  padding-inline: 1.25rem;
+}
+
+@media (min-width: 768px) {
+  .contenedor {
+    padding-inline: 2rem;
+  }
+}
+
+@media (min-width: 1280px) {
+  .contenedor {
+    padding-inline: 3rem;
+  }
+}
+
+/* Antetítulo. Uso racionado a propósito: como máximo uno cada tres bloques.
+   Su trabajo es situar, no decorar. */
+.antetitulo {
+  display: inline-block;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--t-acento);
+}
+
+/* Enlace de texto con subrayado que crece desde la izquierda */
+.enlace-linea {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.enlace-linea::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -0.2rem;
+  height: 1px;
+  width: 100%;
+  background-color: currentColor;
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform 320ms var(--t-ease);
+}
+
+.enlace-linea:hover::after,
+.enlace-linea:focus-visible::after {
+  transform: scaleX(1);
+}
+
+/* Flecha del desplegable de los <select> del sitio */
+.select-marca {
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23646C82' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 1rem center;
+  background-size: 20px 20px;
+  padding-right: 3rem;
+}
+
+@media (prefers-color-scheme: dark) {
+  .select-marca {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23949CB0' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+  }
+}
+
+/* Marca de agua con el monograma T&A, el elemento gráfico que el manual
+   define y que aparece en la hoja membretada y en el reverso de la tarjeta.
+   Sustituye a cualquier textura inventada: la materia de la página la pone
+   la propia marca. */
+.marca-agua {
+  position: relative;
+  isolation: isolate;
+}
+
+.marca-agua::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background-image: url("/marca/monograma.svg");
+  background-repeat: no-repeat;
+  background-position: left -2rem bottom -2rem;
+  background-size: auto min(17rem, 30%);
+  opacity: 0.05;
+  pointer-events: none;
+}
+
+.marca-agua-der::after {
+  background-position: right -2rem bottom -2rem;
+}
+
+@media (prefers-color-scheme: dark) {
+  .marca-agua::after {
+    background-image: url("/marca/monograma-claro.svg");
+    opacity: 0.07;
+  }
+}
+
+.trama-invertida {
+  background-image:
+    linear-gradient(115deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(65deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+  background-size: 44px 44px, 72px 72px;
+}
+
+.marca-agua-clara::after {
+  background-image: url("/marca/monograma-claro.svg") !important;
+  opacity: 0.055 !important;
+}
+
+/* Elevación sobria: sombra teñida con el matiz del fondo */
+.elevacion {
+  box-shadow: 0 24px 48px -32px rgb(var(--t-sombra) / 0.45);
+}
+
+/* --------------------------------------------------------------------------
+   6. Prosa · artículos de la sección Recursos
+   -------------------------------------------------------------------------- */
+
+.prosa {
+  color: var(--t-tinta-2);
+  font-size: 1.02rem;
+  line-height: 1.8;
+}
+
+.prosa > * + * {
+  margin-top: 1.5rem;
+}
+
+.prosa h2 {
+  font-size: 1.6rem;
+  line-height: 1.25;
+  margin-top: 3.25rem;
+  padding-top: 2rem;
+  border-top: 1px solid var(--t-linea);
+}
+
+.prosa h3 {
+  font-size: 1.2rem;
+  line-height: 1.35;
+  margin-top: 2.5rem;
+}
+
+.prosa strong {
+  color: var(--t-tinta);
+  font-weight: 600;
+}
+
+.prosa a {
+  color: var(--t-enlace);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.prosa a:hover {
+  color: var(--t-tinta);
+}
+
+.prosa ul {
+  list-style: none;
+  padding-left: 0;
+}
+
+.prosa ul > li {
+  position: relative;
+  padding-left: 1.6rem;
+}
+
+.prosa ul > li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.85em;
+  width: 0.6rem;
+  height: 1px;
+  background-color: var(--t-acento);
+}
+
+.prosa ol {
+  list-style: decimal;
+  padding-left: 1.35rem;
+}
+
+.prosa ol > li::marker {
+  color: var(--t-acento);
+  font-weight: 600;
+}
+
+.prosa li + li {
+  margin-top: 0.7rem;
+}
+
+.prosa blockquote {
+  border-left: 2px solid var(--t-acento);
+  padding-left: 1.5rem;
+  color: var(--t-tinta);
+}
+
+.prosa hr {
+  border: 0;
+  border-top: 1px solid var(--t-linea);
+  margin-top: 3rem;
+}
+
+.prosa hr + p {
+  font-size: 0.86rem;
+  line-height: 1.7;
+  color: var(--t-tinta-3);
+}
+
+.prosa table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.92rem;
+}
+
+.prosa th,
+.prosa td {
+  border: 1px solid var(--t-linea);
+  padding: 0.75rem 1rem;
+  text-align: left;
+}
+
+.prosa th {
+  background-color: var(--t-superficie-2);
+  color: var(--t-tinta);
+  font-weight: 600;
+}
+
+/* --------------------------------------------------------------------------
+   7. Movimiento
+   --------------------------------------------------------------------------
+   Nivel contenido. Cada animación tiene un motivo: jerarquía en la apertura,
+   secuencia de lectura al desplazar, y respuesta táctil al interactuar.
+   Nada se mueve en bucle.
+   -------------------------------------------------------------------------- */
+
+@keyframes entrada-arriba {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes entrada {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes crecer-x {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+
+.aparece {
+  opacity: 0;
+  transform: translateY(18px);
+  transition:
+    opacity 600ms var(--t-ease),
+    transform 600ms var(--t-ease);
+  transition-delay: var(--retardo, 0ms);
+  will-change: opacity, transform;
+}
+
+.aparece.visible {
+  opacity: 1;
+  transform: none;
+}
+
+.anim-arriba {
+  animation: entrada-arriba 650ms var(--t-ease) both;
+}
+
+.anim-entra {
+  animation: entrada 750ms var(--t-ease) both;
+}
+
+.anim-crece {
+  transform-origin: left center;
+  animation: crecer-x 700ms var(--t-ease) both;
+}
+
+/* --------------------------------------------------------------------------
+   8. Impresión · constancia del Libro de Reclamaciones
+   -------------------------------------------------------------------------- */
+
+@media print {
+  header,
+  footer,
+  a[aria-label="Escribir al estudio por WhatsApp"] {
+    display: none !important;
+  }
+
+  body {
+    background: #fff;
+    color: #000;
+  }
+
+  main {
+    padding: 0 !important;
+  }
+
+  section {
+    padding-block: 0 !important;
+  }
+
+  .aparece {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+
+  #constancia,
+  #constancia section {
+    border: 1px solid #999;
+    break-inside: avoid;
+  }
+
+  a[href]::after {
+    content: "";
+  }
+}
+
+/* --------------------------------------------------------------------------
+   9. Movimiento reducido
+   -------------------------------------------------------------------------- */
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  .aparece {
+    opacity: 1;
+    transform: none;
+  }
+}
